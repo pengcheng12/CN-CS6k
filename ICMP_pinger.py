@@ -42,7 +42,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         
         timeReceived = time.time()
         recPacket, addr = mySocket.recvfrom(1024)
-        #Fill in start
+        
         #Fetch the ICMP header from the IP packe
         type, code, cksum, id, seq = struct.unpack('bbHHh', recPacket[20:28])
             
@@ -58,8 +58,6 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         rtt = (timeReceived - timeSent) * 1000
         return "from {}: rtt: {} ms".format(addr[0], rtt)
         
-        
-        #Fill in end
         timeLeft = timeLeft - howLongInSelect   
         
         if timeLeft <= 0:
@@ -94,10 +92,10 @@ def sendOnePing(mySocket, destAddr, ID):
 def doOnePing(destAddr, timeout):
     icmp = socket.getprotobyname("icmp")
     #SOCK_RAW is a powerful socket type. For more details see: http://sock-raw.org/papers/sock_raw
-    #Fill in start
+
     #Create Socket here
     mySocket = socket.socket(socket.AF_INET, socket.SOCK_RAW, icmp)
-    #Fill in end
+
     myID = os.getpid() & 0xFFFF
     #Return the current process i
     sendOnePing(mySocket, destAddr, myID)
